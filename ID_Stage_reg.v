@@ -3,8 +3,13 @@ module ID_Stage_reg
     input clk,
     input rst,
     input[31:0] PC_in,
+    input flush;
+    input WB_enable,
+    input
     output reg[31:0] PC
+
   );
+
 
   always @(posedge clk, posedge rst)
     begin

@@ -1,7 +1,7 @@
 module Control_Unit(
     input[5:0] Op_Code,
     output reg [3:0] Alu_Command, output reg mem_read,mem_write,
-    wb_enable,branch_type,is_immediate
+    wb_enable,branch_type,is_immediate,branch_taken,
   );
   always@(*) begin
      Alu_Command<=4'b0000;
@@ -29,9 +29,9 @@ module Control_Unit(
       6'b100100: begin Alu_Command <= 4'b0000; mem_read<=1'b1; 
                        wb_enable <=1'b1;  end//36
       6'b100101: begin Alu_Command <= 4'b0000; mem_write <=1'b1; end//37
-      6'b101000: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b01; end//40
-      6'b101001: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b10; end//41
-      6'b101010: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b00; end//42
+      6'b101000: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b01; branch_taken <=1  end//40
+      6'b101001: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b10; branch_taken <=1  end//41
+      6'b101010: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b00; branch_taken <=1 end//42
     endcase
   end 
 endmodule
