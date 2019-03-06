@@ -6,8 +6,7 @@ module ID_Stage
     input [31:0]Instruction,
     output WB_enable,
     output Branch_type,branch_taken,
-    output Ex_cmd,
-    output MEM_stage,
+    output Ex_cmd[3:0],
     output [31:0] Mux_1_res,
     output [5:0] Destination,
     output [31:0] Reg1,Reg2,
@@ -40,7 +39,7 @@ module ID_Stage
       end
       else
         begin
-          PC <= PC_in;
+          PC_out <= PC_in;
         end
     end
 
