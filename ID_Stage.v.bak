@@ -24,7 +24,7 @@ module ID_Stage
   assign Reg2_tmp = Reg2;
   Control_Unit control_unit(Instruction[4:0], Ex_cmd,
   Mem_read, Mem_write, WB_enable, Branch_type, Is_imm, branch_taken);
-  Sign_Extend sign_extend(Instruction[31:16], Extended);
+  Sign_Extend sign_extend(Instruction[16:31], Extended);
   Register_File register_file(clk,rst,Instruction[25:21],
                               Instruction[20:16],Instruction[15:11],
                               WB_enable,Reg1,Reg2);

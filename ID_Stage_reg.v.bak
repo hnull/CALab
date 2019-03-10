@@ -13,13 +13,13 @@ module ID_Stage_reg
     input flush,
     
     output reg[31:0] PC_out,
-    output reg write_back_enable,
-    output reg [3:0]ex_cmd,
-    output reg branch_type,
-    output reg mem_write,mem_Read,
-    output reg [31:0] val1,reg2,
-    output reg [31:0] val2,
-    output reg [4:0] dst
+    output write_back_enable,
+    output [3:0]ex_cmd,
+    output branch_type,
+    output mem_write,mem_Read,
+    output [31:0] val1,reg2,
+    output [31:0] val2,
+    output [4:0] dst
   );
 
 

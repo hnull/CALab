@@ -23,7 +23,8 @@ module Registers_File
       registers[dest] <= Write_Val;
     end
     registers[0] <= 0;
-  end
     assign reg1 = registers[src1];
-    assign reg2 = registers[src2];  
+    assign reg2 = registers[src2];
+  end
+  
 endmodule
