@@ -13,12 +13,15 @@ module Registers_File
 
   reg[4:0] registers[31:0];
   integer i = 0;
-  always @(posedge rst) begin
-    for(i = 0; i < 32; i = i + 1) begin
-      registers[i] <= 0;
-    end
-  end    
+
   always @(posedge clk) begin
+  
+	 if(rst)begin
+		for(i = 0; i < 32; i = i + 1) begin
+			registers[i] <= 0;
+		end
+	 end
+	 
     if (Write_EN) begin
       registers[dest] <= Write_Val;
     end

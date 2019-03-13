@@ -5,7 +5,7 @@ module ID_Stage
     input [31:0] PC_in,
     input [31:0]Instruction,
     output WB_enable,
-    output Branch_type,branch_taken,
+    output Branch_type,
     output [3:0] Ex_cmd,
     output [31:0] Mux_1_res,
     output [4:0] Destination,
@@ -23,9 +23,9 @@ module ID_Stage
 
   assign Reg2_tmp = Reg2;
   Control_Unit control_unit(Instruction[4:0], Ex_cmd,
-  Mem_read, Mem_write, WB_enable, Branch_type, Is_imm, branch_taken);
-  Sign_Extend sign_extend(Instruction[31:16], Extended);
-  Register_File register_file(clk,rst,Instruction[25:21],
+  Mem_read, Mem_write, WB_enable, Branch_type, Is_imm);
+  Sign_Extend sign_extend(Instruction[15:0], Extended);
+  Registers_File register_file(clk,rst,Instruction[25:21],
                               Instruction[20:16],Instruction[15:11],
                               WB_enable,Reg1,Reg2);
   Mux32 mux1(Is_imm, Reg2_tmp, Extended, Mux_1_res);

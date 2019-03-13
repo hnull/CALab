@@ -308,8 +308,8 @@ inout	[35:0]	GPIO_1;					//	GPIO Connection 1
 	 wire[31:0] PC1, PC2, PC3, PC4, PC5, PC6;
     wire[31:0] Instruction1;
 		wire WB_enable;
-		wire Branch_type,branch_taken;
-		wire [4:0] Ex_cmd;
+		wire Branch_type;
+		wire [3:0] Ex_cmd;
 		wire [31:0] Mux_1_res;
 		wire [4:0] Destination;
 		wire [31:0] Reg1,Reg2;
@@ -331,7 +331,7 @@ inout	[35:0]	GPIO_1;					//	GPIO Connection 1
 	wire[6:0] out5;
 	wire[6:0] out6;
 	wire[7:0] out7;
-	assign clk = KEY[0];
+	assign clk = CLOCK_50;
 	assign LEDG[0] = clk;
 	assign LEDG[8:1] = PC1;
 	assign rst = SW[0];
@@ -344,11 +344,11 @@ inout	[35:0]	GPIO_1;					//	GPIO Connection 1
 
 IF_Stage u1(clk, rst, PC, Instruction);
 IF_Stage_reg u2(clk, rst, PC, Instruction, PC1, Instruction1);
-ID_Stage u3(clk, rst, PC1, WB_enable, Branch_type, branch_taken, Ex_cmd, Mux_1_res,
+ID_Stage u3(clk, rst, PC1, Instruction1, WB_enable, Branch_type, Ex_cmd, Mux_1_res,
 						Destination, Reg1, Reg2, Mem_read, Mem_write, PC2);
 ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, branch_type, Mem_write, Mem_read, Reg1,
 	 							Reg2, Mux1_res, Destination, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
-								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,
+								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,val2_id_reg_out
 								,dst_id_reg_out);
 EX_Stage u5(clk, rst, PC3, PC4);
 EX_Stage_reg u6(clk, rst, PC4, PC5);
