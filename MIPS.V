@@ -5,8 +5,8 @@
 // Permission:
 //
 //   Terasic grants permission to use and modify this code for use
-//   in synthesis for all Terasic Development Boards and Altera Development 
-//   Kits made by Terasic.  Other use of this code, including the selling 
+//   in synthesis for all Terasic Development Boards and Altera Development
+//   Kits made by Terasic.  Other use of this code, including the selling
 //   ,duplication, or modification of any portion is strictly prohibited.
 //
 // Disclaimer:
@@ -15,11 +15,11 @@
 //   which illustrates how these types of functions can be implemented.
 //   It is the user's responsibility to verify their design for
 //   consistency and functionality through the use of formal
-//   verification methods.  Terasic provides no warranty regarding the use 
+//   verification methods.  Terasic provides no warranty regarding the use
 //   or functionality of this code.
 //
 // ============================================================================
-//           
+//
 //  Terasic Technologies Inc
 //  9F., No.176, Sec.2, Gongdao 5th Rd, East Dist, Hsinchu City, 30070. Taiwan
 //
@@ -39,7 +39,7 @@
 //   Ver  :| Author            :| Mod. Date :| Changes Made:
 //   V1.0 :| Johnny Chen       :| 05/08/19  :|      Initial Revision
 //   V1.1 :| Johnny Chen       :| 05/11/16  :|      Added FLASH Address FL_ADDR[21:20]
-//   V1.2 :| Johnny Chen       :| 05/11/16  :|		Fixed ISP1362 INT/DREQ Pin Direction.   
+//   V1.2 :| Johnny Chen       :| 05/11/16  :|		Fixed ISP1362 INT/DREQ Pin Direction.
 //   V1.3 :| Johnny Chen       :| 06/11/16  :|		Added the Dedicated TV Decoder Line-Locked-Clock Input
 //													            for DE2 v2.X PCB.
 //   V1.5 :| Eko    Yan        :| 12/01/30  :|      Update to version 11.1 sp1.
@@ -47,7 +47,7 @@
 
 module MIPS
 	(
-		////////////////////	Clock Input	 	////////////////////	 
+		////////////////////	Clock Input	 	////////////////////
 		CLOCK_27,						//	27 MHz
 		CLOCK_50,						//	50 MHz
 		EXT_CLOCK,						//	External Clock
@@ -76,7 +76,7 @@ module MIPS
 		/////////////////////	SDRAM Interface		////////////////
 		DRAM_DQ,						//	SDRAM Data bus 16 Bits
 		DRAM_ADDR,						//	SDRAM Address bus 12 Bits
-		DRAM_LDQM,						//	SDRAM Low-byte Data Mask 
+		DRAM_LDQM,						//	SDRAM Low-byte Data Mask
 		DRAM_UDQM,						//	SDRAM High-byte Data Mask
 		DRAM_WE_N,						//	SDRAM Write Enable
 		DRAM_CAS_N,						//	SDRAM Column Address Strobe
@@ -96,8 +96,8 @@ module MIPS
 		////////////////////	SRAM Interface		////////////////
 		SRAM_DQ,						//	SRAM Data bus 16 Bits
 		SRAM_ADDR,						//	SRAM Address bus 18 Bits
-		SRAM_UB_N,						//	SRAM High-byte Data Mask 
-		SRAM_LB_N,						//	SRAM Low-byte Data Mask 
+		SRAM_UB_N,						//	SRAM High-byte Data Mask
+		SRAM_LB_N,						//	SRAM Low-byte Data Mask
 		SRAM_WE_N,						//	SRAM Write Enable
 		SRAM_CE_N,						//	SRAM Chip Enable
 		SRAM_OE_N,						//	SRAM Output Enable
@@ -125,7 +125,7 @@ module MIPS
 		LCD_DATA,						//	LCD Data bus 8 bits
 		////////////////////	SD_Card Interface	////////////////
 		//SD_DAT,							//	SD Card Data
-		//SD_WP_N,						   //	SD Write protect 
+		//SD_WP_N,						   //	SD Write protect
 		//SD_CMD,							//	SD Card Command Signal
 		//SD_CLK,							//	SD Card Clock
 		////////////////////	USB JTAG link	////////////////////
@@ -204,7 +204,7 @@ output  [17:0]	LEDR;					//	LED Red[17:0]
 ///////////////////////		SDRAM Interface	////////////////////////
 inout	  [15:0]	DRAM_DQ;				//	SDRAM Data bus 16 Bits
 output  [11:0]	DRAM_ADDR;				//	SDRAM Address bus 12 Bits
-output			DRAM_LDQM;				//	SDRAM Low-byte Data Mask 
+output			DRAM_LDQM;				//	SDRAM Low-byte Data Mask
 output			DRAM_UDQM;				//	SDRAM High-byte Data Mask
 output			DRAM_WE_N;				//	SDRAM Write Enable
 output			DRAM_CAS_N;				//	SDRAM Column Address Strobe
@@ -224,8 +224,8 @@ output			FL_CE_N;				//	FLASH Chip Enable
 ////////////////////////	SRAM Interface	////////////////////////
 inout	 [15:0]	SRAM_DQ;				//	SRAM Data bus 16 Bits
 output [17:0]	SRAM_ADDR;				//	SRAM Address bus 18 Bits
-output			SRAM_UB_N;				//	SRAM High-byte Data Mask 
-output			SRAM_LB_N;				//	SRAM Low-byte Data Mask 
+output			SRAM_UB_N;				//	SRAM High-byte Data Mask
+output			SRAM_LB_N;				//	SRAM Low-byte Data Mask
 output			SRAM_WE_N;				//	SRAM Write Enable
 output			SRAM_CE_N;				//	SRAM Chip Enable
 output			SRAM_OE_N;				//	SRAM Output Enable
@@ -304,9 +304,26 @@ inout	[35:0]	GPIO_1;					//	GPIO Connection 1
     wire clk;
     wire rst;
     wire[31:0] PC;
-    wire[31:0] Instruction;  
+    wire[31:0] Instruction;
 	 wire[31:0] PC1, PC2, PC3, PC4, PC5, PC6;
     wire[31:0] Instruction1;
+		wire WB_enable;
+		wire Branch_type,branch_taken;
+		wire [4:0] Ex_cmd;
+		wire [31:0] Mux_1_res;
+		wire [4:0] Destination;
+		wire [31:0] Reg1,Reg2;
+		wire Mem_read,Mem_write;
+
+		wire write_back_enable_id_reg_out;
+    wire [3:0]ex_cmd_id_reg_out;
+    wire branch_type_id_reg_out;
+    wire mem_write_id_reg_out,mem_Read_id_reg_out;
+    wire [31:0] val1_id_reg_out,reg2_id_reg_out;
+    wire [31:0] val2_id_reg_out;
+    wire [4:0] dst_id_reg_out;
+
+
 	wire[6:0] out1;
 	wire[6:0] out2;
 	wire[6:0] out3;
@@ -324,11 +341,15 @@ inout	[35:0]	GPIO_1;					//	GPIO Connection 1
 	assign HEX3 = out4;
 	assign HEX4 = out5;
 	assign HEX5 = out6;
- 
+
 IF_Stage u1(clk, rst, PC, Instruction);
 IF_Stage_reg u2(clk, rst, PC, Instruction, PC1, Instruction1);
-ID_Stage u3(clk, rst, PC1, PC2);
-ID_Stage_reg u4(clk, rst, PC2, PC3);
+ID_Stage u3(clk, rst, PC1, WB_enable, Branch_type, branch_taken, Ex_cmd, Mux_1_res,
+						Destination, Reg1, Reg2, Mem_read, Mem_write, PC2);
+ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, branch_type, Mem_write, Mem_read, Reg1,
+	 							Reg2, Mux1_res, Destination, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
+								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,
+								,dst_id_reg_out);
 EX_Stage u5(clk, rst, PC3, PC4);
 EX_Stage_reg u6(clk, rst, PC4, PC5);
 Mem_Stage u7(clk, rst, PC5, PC6);
@@ -341,5 +362,5 @@ ss u13(PC3, out4);
 ss u14(PC4, out5);
 ss u15(PC5, out6);
 ss u16(PC6, out7);
-	
+
 endmodule

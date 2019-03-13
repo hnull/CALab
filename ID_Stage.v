@@ -12,7 +12,7 @@ module ID_Stage
     output [31:0] Reg1,Reg2,
     output Mem_read,Mem_write,
     output reg[31:0] PC_out
-  
+
   );
   wire Is_imm;
   wire [5:0] Src1,Src2;
@@ -45,4 +45,3 @@ module ID_Stage
 
 
 endmodule
-
