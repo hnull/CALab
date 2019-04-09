@@ -1,15 +1,6 @@
 module Data_memory(input [31:0]address,write_data,input mem_read,mem_write,input clk,rst,output logic [31:0] read_data);
-  logic [31:0] memory [6500:0];
-  integer i;
-  // always @ ( posedge rst , posedge clk ) begin
-  //   if (rst) begin
-  //     for(i=0;i<6500;i+=i+1)begin
-  //        memory[i] <= 32'b0;
-  //         end
-  //   end
-  // end
-    assign read_data = mem_read ? memory[address] : 32'b0;
-
+  reg [31:0] memory [6500:0];
+  assign read_data = mem_read ? memory[address] : 32'b0;
 
   always @ ( posedge clk ) begin
     if (mem_write) begin

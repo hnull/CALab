@@ -11,7 +11,7 @@ module ID_Stage
     output [4:0] Destination,
     output [31:0] Reg1,Reg2,
     output Mem_read,Mem_write,
-    output reg[31:0] PC_out
+    output [31:0] PC_out
 
   );
   wire Is_imm;
@@ -19,8 +19,8 @@ module ID_Stage
   wire [15:0] Immediate;
   wire [31:0] Reg2_tmp;
   wire [31:0] Extended;
-  // wire [31:0] Mux1_result;
 
+  assign PC_out = PC_in;
   assign Reg2_tmp = Reg2;
   Control_Unit control_unit(.Op_Code(Instruction[31:26]), .Alu_Command(Ex_cmd),
                             .mem_read(Mem_read), .mem_write(Mem_write), .branch_type(Branch_type), .wb_enable(WB_enable), .is_immediate(Is_imm));
@@ -30,18 +30,5 @@ module ID_Stage
                               .Write_EN(WB_enable), .reg1(Reg1), .reg2(Reg2));
   Mux32 mux1(.is_immediate(Is_imm), .inp1(Reg2_tmp), .inp2(Extended), .out(Mux_1_res));
   Mux5 mux2(.is_immediate(Is_imm), .inp1(Instruction[15:11]), .inp2(Instruction[20:16]), .out(Destination));
-
-  always @(posedge clk, posedge rst)
-    begin
-      if(rst)
-        begin
-          PC_out <= 32'b0;
-      end
-      else
-        begin
-          PC_out <= PC_in;
-        end
-    end
-
 
 endmodule
