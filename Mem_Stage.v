@@ -14,7 +14,7 @@ module Mem_Stage
     output reg [31:0] PC,
     output MEM_R_EN,
     output [31:0] ALU_result,
-    output reg [31:0] MEM_read_value,
+    output [31:0] MEM_read_value,
     output [4:0] Dest
   );
     wire [31:0] adr;

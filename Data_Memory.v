@@ -1,4 +1,4 @@
-module Data_memory(input [31:0]address,write_data,input mem_read,mem_write,input clk,rst,output logic [31:0] read_data);
+module Data_memory(input [31:0]address,write_data,input mem_read,mem_write,input clk,rst,output [31:0] read_data);
   reg [31:0] memory [6500:0];
   assign read_data = mem_read ? memory[address] : 32'b0;
 
