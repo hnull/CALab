@@ -13,7 +13,7 @@ module Control_Unit(
       is_immediate<=1'b0;
     case(Op_Code)
       6'b000000: Alu_Command <= 4'bxxxx;  //0
-      6'b000000: begin Alu_Command <= 4'b0000; wb_enable <=1'b1; end //1
+      6'b000001: begin Alu_Command <= 4'b0000; wb_enable <=1'b1; end //1
       6'b000011: begin Alu_Command <= 4'b0010; wb_enable <=1'b1;  end //3
       6'b000101: begin Alu_Command <= 4'b0100; wb_enable <=1'b1;  end//5
       6'b000110: begin Alu_Command <= 4'b0100; wb_enable <=1'b1;  end //6

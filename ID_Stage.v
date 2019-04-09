@@ -22,7 +22,7 @@ module ID_Stage
   // wire [31:0] Mux1_result;
 
   assign Reg2_tmp = Reg2;
-  Control_Unit control_unit(.Op_code(Instruction[5:0]), .Alu_Command(Ex_cmd),
+  Control_Unit control_unit(.Op_Code(Instruction[31:26]), .Alu_Command(Ex_cmd),
                             .mem_read(Mem_read), .mem_write(Mem_write), .branch_type(Branch_type), .wb_enable(WB_enable), .is_immediate(Is_imm));
   Sign_Extend sign_extend(.in(Instruction[15:0]), .out(Extended));
   Registers_File register_file(.clk(clk), .rst(rst), .src1(Instruction[25:21]),
