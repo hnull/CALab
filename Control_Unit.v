@@ -1,14 +1,15 @@
 module Control_Unit(
     input[5:0] Op_Code,
     output reg [3:0] Alu_Command, output reg mem_read,mem_write,
-    wb_enable,branch_type,is_immediate
+    output reg [1:0] branch_type,
+    output reg wb_enable,is_immediate
   );
   always@(*) begin
      Alu_Command<=4'b0000;
       mem_read<=1'b0;
       mem_write<=1'b0;
       wb_enable<=1'b0;
-      branch_type<=1'b0;
+      branch_type<=2'b0;
       is_immediate<=1'b0;
     case(Op_Code)
       6'b000000: Alu_Command <= 4'bxxxx;  //0

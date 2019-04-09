@@ -346,7 +346,7 @@ IF_Stage u1(clk, rst, PC, Instruction);
 IF_Stage_reg u2(clk, rst, PC, Instruction, PC1, Instruction1);
 ID_Stage u3(clk, rst, PC1, Instruction1, WB_enable, Branch_type, Ex_cmd, Mux_1_res,
 						Destination, Reg1, Reg2, Mem_read, Mem_write, PC2);
-ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, branch_type, Mem_write, Mem_read, Reg1,
+ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, Branch_type, Mem_write, Mem_read, Reg1,
 	 							Reg2, Mux1_res, Destination, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
 								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,val2_id_reg_out
 								,dst_id_reg_out);

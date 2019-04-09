@@ -5,17 +5,17 @@ module ID_Stage_reg
     input[31:0] PC_in,
     input WB_enable,
     input [3:0] Ex_cmd,
-    input Branch_type,
+    input [1:0] Branch_type,
     input MEM_Write,MEM_Read,
     input [31:0] Reg1,Reg2,
     input [31:0] Mux1_res,
     input [4:0] Destination,
     input flush,
-    
+
     output reg[31:0] PC_out,
     output reg write_back_enable,
-    output reg [3:0]ex_cmd,
-    output reg branch_type,
+    output reg [3:0] ex_cmd,
+    output reg [1:0] branch_type,
     output reg mem_write,mem_Read,
     output reg [31:0] val1,reg2,
     output reg [31:0] val2,
@@ -30,7 +30,7 @@ module ID_Stage_reg
           PC_out <= 32'b0;
           write_back_enable <= 1'b0;
           ex_cmd <= 4'b0;
-          branch_type <= 1'b0;
+          branch_type <= 2'b0;
           mem_write <= 1'b0;
           mem_Read <= 1'b0;
           val1 <= 32'b0;
@@ -50,13 +50,10 @@ module ID_Stage_reg
           reg2 <= Reg2;
           dst  <= Destination;
 
-          
+
 
           PC_out <= PC_in;
         end
     end
 
 endmodule
-
-
-
