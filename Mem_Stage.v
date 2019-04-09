@@ -8,17 +8,20 @@ module Mem_Stage
     input MEM_W_EN_in,
     input [31:0] ALU_result_in,
     input [31:0] ST_val_in,
+    input [4:0] Dest_in,
 
     output WB_en,
     output reg [31:0] PC,
     output MEM_R_EN,
     output [31:0] ALU_result,
-    output reg [31:0] MEM_read_value
+    output reg [31:0] MEM_read_value,
+    output [4:0] Dest
   );
     wire [31:0] adr;
     assign WB_en = WB_en_in;
     assign ALU_result = ALU_result_in;
     assign MEM_R_EN = MEM_R_EN_in;
+    assign Dest = Dest_in;
     Data_memory data_mem (.address(adr), .write_data(ST_val_in),
                         .mem_read(MEM_R_EN_in),.mem_write(MEM_W_EN_in), .clk(clk),
                         .rst(rst), .read_data(MEM_read_value));

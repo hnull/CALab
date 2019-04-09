@@ -41,6 +41,18 @@ wire [31:0] PC5;
 wire [31:0] ALU_result2;
 wire [31:0] ST_val;
 wire [4:0] Destination2;
+wire WB_EN_out3;
+wire [31:0] PC6;
+wire MEM_Read_out3;
+wire [31:0] ALU_result3;
+wire [31:0] MEM_read_value;
+wire [4:0] Destination3;
+wire [31:0] PC7;
+wire WB_EN_out4;
+wire MEM_Read_out4;
+wire [31:0] ALU_result4;
+wire [31:0] MEM_read_value2;
+wire [4:0] Destination4;
 
 IF_Stage u1(clk, rst, PC, Instruction);
 IF_Stage_reg u2(clk, rst, PC, Instruction, PC1, Instruction1);
@@ -78,22 +90,59 @@ EX_Stage_reg u6(
     .clk(clk),
     .rst(rst),
     .WB_en_in(WB_EN_out),
-    .MEM_R_EN_in(MEM_Write_out),
-    .MEM_W_EN_in(MEM_Read_out),
+    .MEM_R_EN_in(MEM_Read_out),
+    .MEM_W_EN_in(MEM_Write_out),
     .PC_in(PC4),
     .ALU_result_in(ALU_result1),
     .ST_val_in(val_src2_out),
     .Dest_in(dest_out),
 
     .WB_en(WB_EN_out2),
-    .MEM_R_EN(MEM_Write_out),
-    .MEM_W_EN(MEM_Read_out),
+    .MEM_R_EN(MEM_Read_out2),
+    .MEM_W_EN(MEM_Write_out2),
     .PC(PC5),
     .ALU_result(ALU_result2),
     .ST_val(ST_val),
     .Dest(Destination2)
   );
 
+Mem_Stage u7
+	  (
+	    .clk(clk),
+	    .rst(rst),
+	    .PC_in(PC5),
+	    .WB_en_in(WB_EN_out2),
+	    .MEM_R_EN_in(MEM_Read_out2),
+	    .MEM_W_EN_in(MEM_Write_out2),
+	    .ALU_result_in(ALU_result2),
+	    .ST_val_in(ST_val),
+			.Dest_in(Destination2),
 
+	    .WB_en(WB_EN_out3),
+	    .PC(PC6),
+	    .MEM_R_EN(MEM_Read_out3),
+	    .ALU_result(ALU_result3),
+	    .MEM_read_value(MEM_read_value),
+			.Dest(Destination3)
+	  );
+
+Mem_Stage_reg u8
+		(
+		  .clk(clk),
+		  .rst(rst),
+		  .PC_in(PC6),
+		  .WB_en_in(WB_EN_out3),
+		  .MEM_R_EN_in(MEM_Read_out3),
+		  .ALU_result_in(ALU_result3),
+		  .Mem_read_value_in(MEM_read_value),
+		  .Dest_in(Destination3),
+
+		  .PC(PC7),
+		  .WB_en(WB_EN_out3),
+		  .MEM_R_EN(MEM_Read_out4),
+		  .ALU_result(ALU_result4),
+		  .Mem_read_value(MEM_read_value2),
+		  .Dest(Destination4)
+		);
 
 endmodule // mips_modelsim
