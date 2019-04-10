@@ -49,9 +49,6 @@ module ID_Stage_reg
           val2 <= Mux1_res;
           reg2 <= Reg2;
           dst  <= Destination;
-
-
-
           PC_out <= PC_in;
         end
     end

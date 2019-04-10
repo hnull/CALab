@@ -4,5 +4,5 @@ module Address_Mapping
     output[31:0] out
   );
 
-  assign out = in - 4'd1024;
+  assign out = in - 11'b10000000000;
 endmodule

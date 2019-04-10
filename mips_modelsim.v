@@ -53,7 +53,7 @@ wire MEM_Read_out4;
 wire [31:0] ALU_result4;
 wire [31:0] MEM_read_value2;
 wire [4:0] Destination4;
-wire [31:0] write_val;
+//wire [31:0] write_val;
 wire WB_EN_out5;
 wire [31:0] write_val2;
 wire [4:0] Destination5;
