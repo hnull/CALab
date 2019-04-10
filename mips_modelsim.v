@@ -69,7 +69,6 @@ IF_Stage u1(
     				.Instruction3(Instruction)
   				);
 
-//IF_Stage u1(clk, rst, PC, Instruction);
 IF_Stage_reg u2(
 								.clk(clk),
 								.rst(rst),
