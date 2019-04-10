@@ -32,7 +32,7 @@ module Control_Unit(
       6'b100101: begin Alu_Command <= 4'b0000; mem_write <=1'b1; end//37
       6'b101000: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b01; end //branch_taken <=1;  end//40
       6'b101001: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b10; end// branch_taken <=1;  end//41
-      6'b101010: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b00; end //branch_taken <=1; end//42
+      6'b101010: begin Alu_Command <= 4'bxxxx; branch_type <= 2'b11; end //branch_taken <=1; end//42
     endcase
   end
 endmodule

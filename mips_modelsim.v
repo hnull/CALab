@@ -5,7 +5,7 @@ wire [31:0] Instruction;
 wire [31:0] PC1;
 wire [31:0] Instruction1;
 wire WB_enable;
-wire [1:0] branch_type;
+//wire [1:0] branch_type;
 wire [3:0] Ex_cmd;
 wire [31:0] Mux_1_res;
 wire [4:0] Destination;
@@ -14,7 +14,7 @@ wire [31:0] Reg2;
 wire Mem_read;
 wire Mem_write;
 wire [31:0] PC2;
-wire flush;
+// wire flush;
 wire [31:0] PC3;
 wire write_back_enable_id_reg_out;
 wire [3:0] ex_cmd_id_reg_out;
@@ -58,6 +58,7 @@ wire WB_EN_out5;
 wire [31:0] write_val2;
 wire [4:0] Destination5;
 wire [31:0] PC8;
+wire [1:0] Branch_type;
 
 IF_Stage u1(
     				.clk(clk),

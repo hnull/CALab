@@ -7,6 +7,7 @@ module ID_Stage
     input [31:0] write_val,
     input [4:0] Dest_in,
     input WB_enable_in,
+
     output WB_enable,
     output [1:0]Branch_type,
     output [3:0] Ex_cmd,
