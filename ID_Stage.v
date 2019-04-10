@@ -4,6 +4,9 @@ module ID_Stage
     input rst,
     input [31:0] PC_in,
     input [31:0]Instruction,
+    input [31:0] write_val,
+    input [4:0] Dest_in,
+    input WB_enable_in,
     output WB_enable,
     output [1:0]Branch_type,
     output [3:0] Ex_cmd,
@@ -26,8 +29,8 @@ module ID_Stage
                             .mem_read(Mem_read), .mem_write(Mem_write), .branch_type(Branch_type), .wb_enable(WB_enable), .is_immediate(Is_imm));
   Sign_Extend sign_extend(.in(Instruction[15:0]), .out(Extended));
   Registers_File register_file(.clk(clk), .rst(rst), .src1(Instruction[25:21]),
-                              .src2(Instruction[20:16]), .dest(Instruction[15:11]),
-                              .Write_EN(WB_enable), .reg1(Reg1), .reg2(Reg2));
+                              .src2(Instruction[20:16]), .dest(Dest_in), . Write_Val(write_val),
+                              .Write_EN(WB_enable_in), .reg1(Reg1), .reg2(Reg2));
   Mux32 mux1(.is_immediate(Is_imm), .inp1(Reg2_tmp), .inp2(Extended), .out(Mux_1_res));
   Mux5 mux2(.is_immediate(Is_imm), .inp1(Instruction[15:11]), .inp2(Instruction[20:16]), .out(Destination));
 

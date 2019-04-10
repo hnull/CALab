@@ -53,17 +53,56 @@ wire MEM_Read_out4;
 wire [31:0] ALU_result4;
 wire [31:0] MEM_read_value2;
 wire [4:0] Destination4;
+wire [31:0] write_val;
+wire WB_EN_out5;
+wire [31:0] write_val2;
+wire [4:0] Destination5;
+wire [31:0] PC8;
 
-IF_Stage u1(clk, rst, PC, Instruction);
-IF_Stage_reg u2(clk, rst, PC, Instruction, PC1, Instruction1);
-ID_Stage u3(clk, rst, PC1, Instruction1, WB_enable, Branch_type, Ex_cmd, Mux_1_res,
-						Destination, Reg1, Reg2, Mem_read, Mem_write, PC2);
+IF_Stage u1(
+    				.clk(clk),
+    				.rst(rst),
+    				.Br_taken(Br_taken),
+    				.Branch_Address(Br_Addr),
+    				.PC(PC),
+    				.Instruction3(Instruction)
+  				);
+
+//IF_Stage u1(clk, rst, PC, Instruction);
+IF_Stage_reg u2(
+								.clk(clk),
+								.rst(rst),
+								.PC_in(PC),
+								.Instruction_in(Instruction),
+								.PC(PC1),
+								.Instruction(Instruction1)
+								);
+ID_Stage u3(
+						.clk(clk),
+						.rst(rst),
+						.PC_in(PC1),
+						.Instruction(Instruction1),
+						.write_val(write_val2),
+						.Dest_in(Destination4),
+						.WB_enable_in(WB_EN_out4),
+						.WB_enable(WB_enable),
+						.Branch_type(Branch_type),
+						.Ex_cmd(Ex_cmd),
+						.Mux_1_res(Mux_1_res),
+						.Destination(Destination),
+						.Reg1(Reg1),
+						.Reg2(Reg2),
+						.Mem_read(Mem_read),
+						.Mem_write(Mem_write),
+						.PC_out(PC2)
+						);
 ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, Branch_type, Mem_write, Mem_read, Reg1,
 	 							Reg2, Mux_1_res, Destination, flush, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
 								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,val2_id_reg_out
 								,dst_id_reg_out);
 
-EX_Stage u5(.clk(clk), .rst(rst),
+EX_Stage u5(
+		.clk(clk), .rst(rst),
     .EXE_CMD(ex_cmd_id_reg_out),
     .val1(val1_id_reg_out),
     .val2(val2_id_reg_out),
@@ -138,11 +177,27 @@ Mem_Stage_reg u8
 		  .Dest_in(Destination3),
 
 		  .PC(PC7),
-		  .WB_en(WB_EN_out3),
+		  .WB_en(WB_EN_out4),
 		  .MEM_R_EN(MEM_Read_out4),
 		  .ALU_result(ALU_result4),
 		  .Mem_read_value(MEM_read_value2),
 		  .Dest(Destination4)
 		);
+
+WB_Stage u9
+		  (
+		   .clk(clk),
+		   .rst(rst),
+		   .WB_en_in(WB_EN_out4),
+		   .MEM_R_EN(MEM_Read_out4),
+		   .ALU_result(ALU_result4),
+		   .Mem_read_value(MEM_read_value2),
+		   .Dest_in(Destination4),
+		   .PC_in(PC7),
+		   .WB_en(WB_EN_out5),
+		   .Write_Value(write_val2),
+		   .Dest(Destination5),
+		   .PC(PC8)
+		  );
 
 endmodule // mips_modelsim
