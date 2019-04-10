@@ -74,6 +74,7 @@ IF_Stage_reg u2(
 								.rst(rst),
 								.PC_in(PC),
 								.Instruction_in(Instruction),
+                .flush(Br_taken),
 								.PC(PC1),
 								.Instruction(Instruction1)
 								);
@@ -97,7 +98,7 @@ ID_Stage u3(
 						.PC_out(PC2)
 						);
 ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, Branch_type, Mem_write, Mem_read, Reg1,
-	 							Reg2, Mux_1_res, Destination, flush, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
+	 							Reg2, Mux_1_res, Destination, Br_taken, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
 								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,val2_id_reg_out
 								,dst_id_reg_out);
 
