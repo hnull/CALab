@@ -11,22 +11,22 @@ module Registers_File
     output[31:0] reg2
    );
 
-  reg[4:0] registers[31:0];
+  reg[31:0] registers[31:0];
   integer i = 0;
 
-  always @(posedge clk) begin
-  
+  always @(posedge clk, posedge rst) begin
+
 	 if(rst)begin
 		for(i = 0; i < 32; i = i + 1) begin
-			registers[i] <= 0;
+			registers[i] <= 32'b0;
 		end
 	 end
-	 
+
     if (Write_EN) begin
       registers[dest] <= Write_Val;
     end
-    registers[0] <= 0;
+    registers[0] <= 32'b0;
   end
     assign reg1 = registers[src1];
-    assign reg2 = registers[src2];  
+    assign reg2 = registers[src2];
 endmodule

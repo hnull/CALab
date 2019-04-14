@@ -97,10 +97,32 @@ ID_Stage u3(
 						.Mem_write(Mem_write),
 						.PC_out(PC2)
 						);
-ID_Stage_reg u4(clk, rst, PC2, WB_enable, Ex_cmd, Branch_type, Mem_write, Mem_read, Reg1,
-	 							Reg2, Mux_1_res, Destination, Br_taken, PC3, write_back_enable_id_reg_out, ex_cmd_id_reg_out,
-								branch_type_id_reg_out, mem_write_id_reg_out, mem_Read_id_reg_out, val1_id_reg_out,reg2_id_reg_out,val2_id_reg_out
-								,dst_id_reg_out);
+ID_Stage_reg u4(
+                .clk(clk),
+                .rst(rst),
+                .PC_in(PC2),
+                .WB_enable(WB_enable),
+                .Ex_cmd(Ex_cmd),
+                .Branch_type(Branch_type),
+                .MEM_Write(Mem_write),
+                .MEM_Read(Mem_read),
+                .Reg1(Reg1),
+	 							.Reg2(Reg2),
+                .Mux1_res(Mux_1_res),
+                .Destination(Destination),
+                .flush(Br_taken),
+
+                .PC_out(PC3),
+                .write_back_enable(write_back_enable_id_reg_out),
+                .ex_cmd(ex_cmd_id_reg_out),
+								.branch_type(branch_type_id_reg_out),
+                .mem_write(mem_write_id_reg_out),
+                .mem_Read(mem_Read_id_reg_out),
+                .val1(val1_id_reg_out),
+                .reg2(reg2_id_reg_out),
+                .val2(val2_id_reg_out),
+								.dst(dst_id_reg_out)
+                );
 
 EX_Stage u5(
 		.clk(clk), .rst(rst),
