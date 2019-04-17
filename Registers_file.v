@@ -14,7 +14,7 @@ module Registers_File
   reg[31:0] registers[31:0];
   integer i = 0;
 
-  always @(posedge clk, posedge rst) begin
+  always @(negedge clk, posedge rst) begin
 
 	 if(rst)begin
 		for(i = 0; i < 32; i = i + 1) begin
