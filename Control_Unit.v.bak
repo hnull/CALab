@@ -1,8 +1,8 @@
 module Control_Unit(
     input[5:0] Op_Code,
-    output [3:0] Alu_Command, output mem_read,mem_write,
-    output [1:0] branch_type,
-    output wb_enable,is_immediate
+    output reg [3:0] Alu_Command, output reg mem_read,mem_write,
+    output reg [1:0] branch_type,
+    output reg wb_enable,is_immediate
   );
   assign Alu_Command = (Op_Code == 6'b000000) ?  4'bxxxx ://0
                        (Op_Code == 6'b000001) ?  4'b0000 ://1
