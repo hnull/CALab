@@ -4,7 +4,7 @@ module Hazard_Unit (
                     input [4:0] Exe_dst;
                     input [4:0] Mem_dst;
                     input Mem_wb_en;
-                    input Is_immediate;
+              //      input Is_immediate;
 
                     output Hazard_detected_signal;
                    );
