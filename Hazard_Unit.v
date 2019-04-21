@@ -9,16 +9,19 @@ module Hazard_Unit (
                     output Hazard_detected_signal;
                    );
 
-    always @ ( * ) begin
-         if (Is_immediate && Exe_wb_en) begin
-           if (src1 == Exe_dst || src2 == Exe_dst) begin
-             Hazard_detected_signal = 1'b1;
-           end
-         end
-         if (Mem_wb_en) begin
-           if (src1 == Mem_dst || src2 == Mem_dst) begin
-             Hazard_detected_signal = 1'b1;
-           end
-         end
-    end
+    assign  Hazard_detected_signal = (Exe_wb_en) ? (src1 == Exe_dst || src2 == Exe_dst) ? 1'b1 : 1'b0;
+    assign  Hazard_detected_signal = (Mem_wb_en) ? (src1 == Mem_dst || src2 == Mem_dst) ? 1'b1 : 1'b0;
+
+    // always @ ( * ) begin
+    //      if (Is_immediate && Exe_wb_en) begin
+    //        if (src1 == Exe_dst || src2 == Exe_dst) begin
+    //          Hazard_detected_signal = 1'b1;
+    //        end
+    //      end
+    //      if (Mem_wb_en) begin
+    //        if (src1 == Mem_dst || src2 == Mem_dst) begin
+    //          Hazard_detected_signal = 1'b1;
+    //        end
+    //      end
+    // end
 endmodule // Hazard_Unit
