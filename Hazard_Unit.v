@@ -9,8 +9,9 @@ module Hazard_Unit (
                     output Hazard_detected_signal;
                    );
 
-    assign  Hazard_detected_signal = (Exe_wb_en) ? (src1 == Exe_dst || src2 == Exe_dst) ? 1'b1 : 1'b0;
-    assign  Hazard_detected_signal = (Mem_wb_en) ? (src1 == Mem_dst || src2 == Mem_dst) ? 1'b1 : 1'b0;
+    assign  Hazard_detected_signal = (Exe_wb_en) ? (Src1 == Exe_dst || Src2 == Exe_dst) ? 1'b1 :
+                                     (Mem_wb_en) ? (Src1 == Mem_dst || Src2 == Mem_dst) ? 1'b1 :
+                                      1'b0;
 
     // always @ ( * ) begin
     //      if (Is_immediate && Exe_wb_en) begin
