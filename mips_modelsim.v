@@ -5,7 +5,6 @@ wire [31:0] Instruction;
 wire [31:0] PC1;
 wire [31:0] Instruction1;
 wire WB_enable;
-//wire [1:0] branch_type;
 wire [3:0] Ex_cmd;
 wire [31:0] Mux_1_res;
 wire [4:0] Destination;
@@ -53,16 +52,17 @@ wire MEM_Read_out4;
 wire [31:0] ALU_result4;
 wire [31:0] MEM_read_value2;
 wire [4:0] Destination4;
-//wire [31:0] write_val;
 wire WB_EN_out5;
 wire [31:0] write_val2;
 wire [4:0] Destination5;
 wire [31:0] PC8;
 wire [1:0] Branch_type;
+wire Hazard_detected_signal;
 
 IF_Stage u1(
     				.clk(clk),
     				.rst(rst),
+            .Freeze(Hazard_detected_signal),
     				.Br_taken(Br_taken),
     				.Branch_Address(Br_Addr),
     				.PC(PC),
@@ -72,6 +72,7 @@ IF_Stage u1(
 IF_Stage_reg u2(
 								.clk(clk),
 								.rst(rst),
+                .Freeze(Hazard_detected_signal),
 								.PC_in(PC),
 								.Instruction_in(Instruction),
                 .flush(Br_taken),
@@ -81,6 +82,7 @@ IF_Stage_reg u2(
 ID_Stage u3(
 						.clk(clk),
 						.rst(rst),
+            .Freeze(Hazard_detected_signal),
 						.PC_in(PC1),
 						.Instruction(Instruction1),
 						.write_val(write_val2),
@@ -222,5 +224,18 @@ WB_Stage u9
 		   .Dest(Destination5),
 		   .PC(PC8)
 		  );
+
+Hazard_Unit hazard_unit
+      (
+        .Src1(Instruction1[25:21]),
+        .Src2(Instruction1[20:16]),
+        .Exe_dst(dst_id_reg_out),
+        .Mem_dst(Destination2),
+        .Exe_wb_en(write_back_enable_id_reg_out),
+        .Mem_wb_en(WB_EN_out2),
+
+        .Hazard_detected_signal(Hazard_detected_signal)
+      );
+
 
 endmodule // mips_modelsim

@@ -22,7 +22,7 @@ module Control_Unit(
                        (Op_Code == 6'b101000) ?  4'bxxxx ://40
                        (Op_Code == 6'b101001) ?  4'bxxxx ://41
                        (Op_Code == 6'b101010) ?  4'bxxxx ://42
-                       4'bxxxx;//default ine ya 0000  bayad gozasht ?
+                       4'bxxxx;
 
 
   assign wb_enable =   (Op_Code == 6'b000000) ?  1'b1 ://0
@@ -39,31 +39,16 @@ module Control_Unit(
                        (Op_Code == 6'b100000) ?  1'b1 ://32
                        (Op_Code == 6'b100001) ?  1'b1 ://33
                        (Op_Code == 6'b100100) ?  1'b1 ://36
-                       // (Op_Code == 6'b100101) ?  1'b1 ://37
-                       // (Op_Code == 6'b101000) ?  1'b1 ://40
-                       // (Op_Code == 6'b101001) ?  1'b1 ://41
-                       // (Op_Code == 6'b101010) ?  1'b1 ://42
-                       1'b0;//default ine ya 0000  bayad gozasht ?
+                       1'b0;
 
-  assign is_immediate =  //(Op_Code == 6'b000000) ?  1'b1 ://0
-                         // (Op_Code == 6'b000001) ?  1'b1 ://1
-                         // (Op_Code == 6'b000011) ?  1'b1 ://3
-                         // (Op_Code == 6'b000101) ?  1'b1 ://5
-                         // (Op_Code == 6'b000110) ?  1'b1 ://6
-                         // (Op_Code == 6'b000111) ?  1'b1 ://7
-                         // (Op_Code == 6'b001000) ?  1'b1 ://8
-                         // (Op_Code == 6'b001001) ?  1'b1 ://9
-                         // (Op_Code == 6'b001010) ?  1'b1 ://10
-                         // (Op_Code == 6'b001011) ?  1'b1 ://11
-                         // (Op_Code == 6'b001100) ?  1'b1 ://12
-                         (Op_Code == 6'b100000) ?  1'b1 ://32
+  assign is_immediate =  (Op_Code == 6'b100000) ?  1'b1 ://32
                          (Op_Code == 6'b100001) ?  1'b1 ://33
                          (Op_Code == 6'b100100) ?  1'b1 ://36
                          (Op_Code == 6'b100101) ?  1'b1 ://37
                          (Op_Code == 6'b101000) ?  1'b1 ://40
                          (Op_Code == 6'b101001) ?  1'b1 ://41
                          (Op_Code == 6'b101010) ?  1'b1 ://42
-                         1'b0;//default ine ya 0000  bayad gozasht ?
+                         1'b0;
 
   assign mem_read = (Op_Code == 6'b100100) ? 1'b1: 1'b0;//36
 
@@ -72,7 +57,7 @@ module Control_Unit(
   assign branch_type = (Op_Code == 6'b101000) ?  2'b01 ://40
                        (Op_Code == 6'b101001) ?  2'b10 ://41
                        (Op_Code == 6'b101010) ?  2'b11 ://42
-                       2'b00;//default ine ya 0000  bayad gozasht ?
+                       2'b00;
 
 
   // always@(*) begin
