@@ -1,12 +1,12 @@
 module Hazard_Unit (
                     input [4:0] Src1, Src2,
-                    input Exe_wb_en,
-                    input [4:0] Exe_dst,
-                    input [4:0] Mem_dst,
-                    input Mem_wb_en,
-                    input is_two_source,
+                    input Exe_wb_en;
+                    input [4:0] Exe_dst;
+                    input [4:0] Mem_dst;
+                    input Mem_wb_en;
+                    input is_two_source;
 
-                    output Hazard_detected_signal
+                    output Hazard_detected_signal;
                    );
 
     assign  Hazard_detected_signal = (is_two_source == 1'b1 && Exe_wb_en == 1'b1 && (Src1 == Exe_dst || Src2 == Exe_dst)) ? 1'b1 :

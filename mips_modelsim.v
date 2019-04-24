@@ -58,6 +58,7 @@ wire [4:0] Destination5;
 wire [31:0] PC8;
 wire [1:0] Branch_type;
 wire Hazard_detected_signal;
+wire is_two_source;
 
 IF_Stage u1(
     				.clk(clk),
@@ -97,7 +98,8 @@ ID_Stage u3(
 						.Reg2(Reg2),
 						.Mem_read(Mem_read),
 						.Mem_write(Mem_write),
-						.PC_out(PC2)
+						.PC_out(PC2),
+            .is_two_source(is_two_source)
 						);
 ID_Stage_reg u4(
                 .clk(clk),
@@ -229,10 +231,11 @@ Hazard_Unit hazard_unit
       (
         .Src1(Instruction1[25:21]),
         .Src2(Instruction1[20:16]),
+        .Exe_wb_en(write_back_enable_id_reg_out),
         .Exe_dst(dst_id_reg_out),
         .Mem_dst(Destination2),
-        .Exe_wb_en(write_back_enable_id_reg_out),
         .Mem_wb_en(WB_EN_out2),
+        .is_two_source(is_two_source),
 
         .Hazard_detected_signal(Hazard_detected_signal)
       );

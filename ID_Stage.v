@@ -16,7 +16,8 @@ module ID_Stage
     output [4:0] Destination,
     output [31:0] Reg1,Reg2,
     output Mem_read,Mem_write,
-    output [31:0] PC_out
+    output [31:0] PC_out,
+    output is_two_source
 
   );
   wire Is_imm;
@@ -42,7 +43,7 @@ module ID_Stage
   assign WB_enable = Output_Controller_Signals [8];
 
   Control_Unit control_unit(.Op_Code(Instruction[31:26]), .Alu_Command(temp_Ex_cmd),
-                            .mem_read(temp_Mem_read), .mem_write(temp_Mem_write), .branch_type(temp_Branch_type), .wb_enable(temp_WB_enable), .is_immediate(Is_imm));
+                            .mem_read(temp_Mem_read), .mem_write(temp_Mem_write), .branch_type(temp_Branch_type), .wb_enable(temp_WB_enable), .is_immediate(Is_imm), .is_two_source(is_two_source));
   Sign_Extend sign_extend(.in(Instruction[15:0]), .out(Extended));
   Registers_File register_file(.clk(clk), .rst(rst), .src1(Instruction[25:21]),
                               .src2(Instruction[20:16]), .dest(Dest_in), . Write_Val(write_val),

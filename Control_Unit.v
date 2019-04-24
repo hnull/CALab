@@ -2,7 +2,8 @@ module Control_Unit(
     input[5:0] Op_Code,
     output [3:0] Alu_Command, output mem_read,mem_write,
     output [1:0] branch_type,
-    output wb_enable,is_immediate
+    output wb_enable,is_immediate,
+    output is_two_source
   );
   assign Alu_Command = (Op_Code == 6'b000000) ?  4'bxxxx ://0
                        (Op_Code == 6'b000001) ?  4'b0000 ://1
@@ -59,7 +60,19 @@ module Control_Unit(
                        (Op_Code == 6'b101010) ?  2'b11 ://42
                        2'b00;
 
-
+  assign is_two_source = (Op_Code == 6'b100101) ? 1'b1 :
+                         (Op_Code == 6'b101001) ? 1'b1 :
+                         (Op_Code == 6'b000001) ?  1'b1 ://1
+                         (Op_Code == 6'b000011) ?  1'b1 ://3
+                         (Op_Code == 6'b000101) ?  1'b1 ://5
+                         (Op_Code == 6'b000110) ?  1'b1 ://6
+                         (Op_Code == 6'b000111) ?  1'b1 ://7
+                         (Op_Code == 6'b001000) ?  1'b1 ://8
+                         (Op_Code == 6'b001001) ?  1'b1 ://9
+                         (Op_Code == 6'b001010) ?  1'b1 ://10
+                         (Op_Code == 6'b001011) ?  1'b1 ://11
+                         (Op_Code == 6'b001100) ?  1'b1 ://12                       
+                         1'b0;
   // always@(*) begin
   //  case(Op_Code)
   //     6'b000000: Alu_Command <= 4'bxxxx;  //0
