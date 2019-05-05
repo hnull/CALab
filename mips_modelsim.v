@@ -59,6 +59,10 @@ wire [31:0] PC8;
 wire [1:0] Branch_type;
 wire Hazard_detected_signal;
 wire is_two_source;
+wire[1:0] val1_sel;
+wire[1:0] val2_sel;
+wire[1:0] ST_val_sel;
+
 
 IF_Stage u1(
     				.clk(clk),
@@ -140,6 +144,11 @@ EX_Stage u5(
     .MEM_Write(mem_write_id_reg_out),
     .MEM_Read(mem_Read_id_reg_out),
     .dest(dst_id_reg_out),
+    .ALU_result_in_Mem(ALU_result3),
+    .Write_Value(write_val2),
+    .val1_sel(val1_sel),
+    .val2_sel(val2_sel),
+    .ST_val_sel(ST_val_sel),
 
     .PC(PC4),
     .ALU_result(ALU_result1),
@@ -240,5 +249,18 @@ Hazard_Unit hazard_unit
         .Hazard_detected_signal(Hazard_detected_signal)
       );
 
+Forwarding_Unit forwarding_unit
+      (
+        .src1_EXE(val1_id_reg_out),
+        .src2_EXE(val2_id_reg_out),
+        .ST_src_EXE(dst_id_reg_out),
+        .dest_MEM(Destination2),
+        .dest_WB(Destination4),
+        .WB_EN_MEM(WB_EN_out2),
+        .WB_EN_WB(WB_EN_out4),
+        .val1_sel(val1_sel),
+        .val2_sel(val2_sel),
+        .ST_val_sel(ST_val_sel)
+      );
 
 endmodule // mips_modelsim

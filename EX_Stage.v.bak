@@ -16,7 +16,7 @@ module EX_Stage
     input [31:0] Write_Value,
     input[1:0] val1_sel,
     input[1:0] val2_sel,
-    input[1:0] ST_val_sel,
+    input[1:0] ST_val_sel;],
 
     output reg [31:0] PC,
     output [31:0] ALU_result,
