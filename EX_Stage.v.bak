@@ -16,7 +16,8 @@ module EX_Stage
     input [31:0] Write_Value,
     input[1:0] val1_sel,
     input[1:0] val2_sel,
-    input[1:0] ST_val_sel;],
+    input[1:0] ST_val_sel,
+    input is_two_source_in,
 
     output reg [31:0] PC,
     output [31:0] ALU_result,
@@ -26,7 +27,7 @@ module EX_Stage
     output [31:0] val_src2_out,
     output WB_EN_out,
     output MEM_Write_out,
-    output MEM_Read_out
+    output MEM_Read_out,
   );
 
   wire[31:0] val1_alu;

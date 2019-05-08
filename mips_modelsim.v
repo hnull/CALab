@@ -62,6 +62,8 @@ wire is_two_source;
 wire[1:0] val1_sel;
 wire[1:0] val2_sel;
 wire[1:0] ST_val_sel;
+wire is_two_source1;
+wire is_two_source2;
 
 
 IF_Stage u1(
@@ -119,6 +121,7 @@ ID_Stage_reg u4(
                 .Mux1_res(Mux_1_res),
                 .Destination(Destination),
                 .flush(Br_taken),
+                .is_two_source_in(is_two_source),
 
                 .PC_out(PC3),
                 .write_back_enable(write_back_enable_id_reg_out),
@@ -129,7 +132,8 @@ ID_Stage_reg u4(
                 .val1(val1_id_reg_out),
                 .reg2(reg2_id_reg_out),
                 .val2(val2_id_reg_out),
-								.dst(dst_id_reg_out)
+								.dst(dst_id_reg_out),
+                .is_two_source(is_two_source2)
                 );
 
 EX_Stage u5(
@@ -149,6 +153,7 @@ EX_Stage u5(
     .val1_sel(val1_sel),
     .val2_sel(val2_sel),
     .ST_val_sel(ST_val_sel),
+    .is_two_source_in(is_two_source2),
 
     .PC(PC4),
     .ALU_result(ALU_result1),
@@ -245,6 +250,7 @@ Hazard_Unit hazard_unit
         .Mem_dst(Destination2),
         .Mem_wb_en(WB_EN_out2),
         .is_two_source(is_two_source),
+        .Mem_R_EN(MEM_read_value),
 
         .Hazard_detected_signal(Hazard_detected_signal)
       );
@@ -254,10 +260,12 @@ Forwarding_Unit forwarding_unit
         .src1_EXE(val1_id_reg_out),
         .src2_EXE(val2_id_reg_out),
         .ST_src_EXE(dst_id_reg_out),
-        .dest_MEM(Destination2),
-        .dest_WB(Destination4),
+        .dest_MEM(Destination3),
+        .dest_WB(Destination5),
         .WB_EN_MEM(WB_EN_out2),
-        .WB_EN_WB(WB_EN_out4),
+        .WB_EN_WB(WB_EN_out5),
+        .is_two_source(is_two_source2),
+
         .val1_sel(val1_sel),
         .val2_sel(val2_sel),
         .ST_val_sel(ST_val_sel)

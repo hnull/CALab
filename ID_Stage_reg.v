@@ -11,6 +11,7 @@ module ID_Stage_reg
     input [31:0] Mux1_res,
     input [4:0] Destination,
     input flush,
+    input is_two_source_in,
 
     output reg[31:0] PC_out,
     output reg write_back_enable,
@@ -19,7 +20,8 @@ module ID_Stage_reg
     output reg mem_write,mem_Read,
     output reg [31:0] val1,reg2,
     output reg [31:0] val2,
-    output reg [4:0] dst
+    output reg [4:0] dst,
+    output reg is_two_source
   );
 
 
@@ -37,9 +39,10 @@ module ID_Stage_reg
           val2 <= 32'b0;
           reg2 <= 32'b0;
           dst  <= 5'b0;
+          is_two_source <= 1'b0;
       end
-		else if(flush)begin 
-			 PC_out <= 32'b0;
+		else if(flush)begin
+			    PC_out <= 32'b0;
           write_back_enable <= 1'b0;
           ex_cmd <= 4'b0;
           branch_type <= 2'b0;
@@ -49,6 +52,7 @@ module ID_Stage_reg
           val2 <= 32'b0;
           reg2 <= 32'b0;
           dst  <= 5'b0;
+          is_two_source <= 1'b0;
 			end
       else
         begin
@@ -62,6 +66,7 @@ module ID_Stage_reg
           reg2 <= Reg2;
           dst  <= Destination;
           PC_out <= PC_in;
+          is_two_source <= is_two_source_in;
         end
     end
 

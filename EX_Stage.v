@@ -17,6 +17,7 @@ module EX_Stage
     input[1:0] val1_sel,
     input[1:0] val2_sel,
     input[1:0] ST_val_sel,
+    input is_two_source_in,
 
     output reg [31:0] PC,
     output [31:0] ALU_result,
@@ -42,7 +43,7 @@ module EX_Stage
   Condition_Check condition_check ( .Branch_Type(Br_type), .Val1(val1), .Val2(val_src2), .Br_taken(Br_taken));
   Mux_3to1 mux1(.sel(val1_sel), .inp1(val1), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val1_alu));
   Mux_3to1 mux2(.sel(val2_sel), .inp1(val2), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val2_alu));
-  Mux_3to1 mux3(.sel(ST_val_sel), .inp1(val_src2), .inp2(), .inp3(), .out(val_src2_out));
+  Mux_3to1 mux3(.sel(ST_val_sel), .inp1(val_src2), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val_src2_out));
 
   always @(posedge clk, posedge rst)
     begin
