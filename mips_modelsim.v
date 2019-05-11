@@ -64,7 +64,10 @@ wire[1:0] val2_sel;
 wire[1:0] ST_val_sel;
 wire is_two_source1;
 wire is_two_source2;
-
+wire [4:0] src1_1;
+wire [4:0] src2_1;
+wire [4:0] src1_2;
+wire [4:0] src2_2;
 
 IF_Stage u1(
     				.clk(clk),
@@ -72,6 +75,7 @@ IF_Stage u1(
             .Freeze(Hazard_detected_signal),
     				.Br_taken(Br_taken),
     				.Branch_Address(Br_Addr),
+
     				.PC(PC),
     				.Instruction3(Instruction)
   				);
@@ -83,6 +87,7 @@ IF_Stage_reg u2(
 								.PC_in(PC),
 								.Instruction_in(Instruction),
                 .flush(Br_taken),
+                
 								.PC(PC1),
 								.Instruction(Instruction1)
 								);
@@ -95,6 +100,7 @@ ID_Stage u3(
 						.write_val(write_val2),
 						.Dest_in(Destination4),
 						.WB_enable_in(WB_EN_out4),
+
 						.WB_enable(WB_enable),
 						.Branch_type(Branch_type),
 						.Ex_cmd(Ex_cmd),
@@ -105,6 +111,8 @@ ID_Stage u3(
 						.Mem_read(Mem_read),
 						.Mem_write(Mem_write),
 						.PC_out(PC2),
+            .src1(src1_1),
+            .src2(src2_1),
             .is_two_source(is_two_source)
 						);
 ID_Stage_reg u4(
@@ -121,6 +129,8 @@ ID_Stage_reg u4(
                 .Mux1_res(Mux_1_res),
                 .Destination(Destination),
                 .flush(Br_taken),
+                .src1_in(src1_1),
+                .src2_in(src2_1),
                 .is_two_source_in(is_two_source),
 
                 .PC_out(PC3),
@@ -133,6 +143,8 @@ ID_Stage_reg u4(
                 .reg2(reg2_id_reg_out),
                 .val2(val2_id_reg_out),
 								.dst(dst_id_reg_out),
+                .src1(src1_2),
+                .src2(src2_2),
                 .is_two_source(is_two_source2)
                 );
 
@@ -235,6 +247,7 @@ WB_Stage u9
 		   .Mem_read_value(MEM_read_value2),
 		   .Dest_in(Destination4),
 		   .PC_in(PC7),
+
 		   .WB_en(WB_EN_out5),
 		   .Write_Value(write_val2),
 		   .Dest(Destination5),
@@ -250,15 +263,15 @@ Hazard_Unit hazard_unit
         .Mem_dst(Destination2),
         .Mem_wb_en(WB_EN_out2),
         .is_two_source(is_two_source),
-        .Mem_R_EN(MEM_read_value),
+        .Mem_R_EN(MEM_Read_out3),
 
         .Hazard_detected_signal(Hazard_detected_signal)
       );
 
 Forwarding_Unit forwarding_unit
       (
-        .src1_EXE(val1_id_reg_out),
-        .src2_EXE(val2_id_reg_out),
+        .src1_EXE(src1_2),
+        .src2_EXE(src2_2),
         .ST_src_EXE(dst_id_reg_out),
         .dest_MEM(Destination3),
         .dest_WB(Destination5),

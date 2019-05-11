@@ -17,8 +17,9 @@ module ID_Stage
     output [31:0] Reg1,Reg2,
     output Mem_read,Mem_write,
     output [31:0] PC_out,
+    output [4:0] src1,
+    output [4:0] src2,
     output is_two_source
-
   );
   wire Is_imm;
   wire [5:0] Src1,Src2;
@@ -41,6 +42,8 @@ module ID_Stage
   assign Mem_write = Output_Controller_Signals [6];
   assign Mem_read = Output_Controller_Signals [7];
   assign WB_enable = Output_Controller_Signals [8];
+  assign src1 = Instruction[25:21];
+  assign src2 = (Is_imm) ? 5'b0 : Instruction[20:16];
 
   Control_Unit control_unit(.Op_Code(Instruction[31:26]), .Alu_Command(temp_Ex_cmd),
                             .mem_read(temp_Mem_read), .mem_write(temp_Mem_write), .branch_type(temp_Branch_type), .wb_enable(temp_WB_enable), .is_immediate(Is_imm), .is_two_source(is_two_source));

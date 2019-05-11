@@ -11,6 +11,8 @@ module ID_Stage_reg
     input [31:0] Mux1_res,
     input [4:0] Destination,
     input flush,
+    input [4:0] src1_in,
+    input [4:0] src2_in,
     input is_two_source_in,
 
     output reg[31:0] PC_out,
@@ -21,6 +23,8 @@ module ID_Stage_reg
     output reg [31:0] val1,reg2,
     output reg [31:0] val2,
     output reg [4:0] dst,
+    output reg [4:0] src1,
+    output reg [4:0] src2,
     output reg is_two_source
   );
 
@@ -40,6 +44,8 @@ module ID_Stage_reg
           reg2 <= 32'b0;
           dst  <= 5'b0;
           is_two_source <= 1'b0;
+          src1 <= 5'b0;
+          src2 <= 5'b0;
       end
 		else if(flush)begin
 			    PC_out <= 32'b0;
@@ -53,6 +59,8 @@ module ID_Stage_reg
           reg2 <= 32'b0;
           dst  <= 5'b0;
           is_two_source <= 1'b0;
+          src1 <= 5'b0;
+          src2 <= 5'b0;
 			end
       else
         begin
@@ -67,6 +75,8 @@ module ID_Stage_reg
           dst  <= Destination;
           PC_out <= PC_in;
           is_two_source <= is_two_source_in;
+          src1 <= src1_in;
+          src2 <= src2_in;
         end
     end
 

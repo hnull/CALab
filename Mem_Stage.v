@@ -22,11 +22,10 @@ module Mem_Stage
     assign ALU_result = ALU_result_in;
     assign MEM_R_EN = MEM_R_EN_in;
     assign Dest = Dest_in;
-    Data_memory data_mem (.address(adr), .write_data(ST_val_in),
-                        .mem_read(MEM_R_EN_in),.mem_write(MEM_W_EN_in), .clk(clk),
-                        .rst(rst), .read_data(MEM_read_value));
+    Data_Memory data_mem (.address(adr), .write_data(ST_val_in),
+                          .mem_read(MEM_R_EN_in), .mem_write(MEM_W_EN_in), .clk(clk),
+                          .rst(rst), .read_data(MEM_read_value));
     Address_Mapping address_mapping (.in(ALU_result_in), .out(adr));
-  // module Data_memory(input [31:0]address,write_data,input mem_read,mem_write,input clk,rst,output logic [31:0] read_data);
   always @(posedge clk, posedge rst)
     begin
       if(rst)
