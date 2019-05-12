@@ -40,7 +40,7 @@ module EX_Stage
   //assign val_src2_out = val_src2;
   Alu alu (.first(val1_alu), .second(val2_alu), .control(EXE_CMD), .out(ALU_result));
   Adder32 addr32(.inp1(PC_in), .inp2(val2), .result(Br_Addr));
-  Condition_Check condition_check ( .Branch_Type(Br_type), .Val1(val1), .Val2(val_src2), .Br_taken(Br_taken));
+  Condition_Check condition_check ( .Branch_Type(Br_type), .Val1(val1_alu), .Val2(val_src2_out), .Br_taken(Br_taken));
   Mux_3to1 mux1(.sel(val1_sel), .inp1(val1), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val1_alu));
   Mux_3to1 mux2(.sel(val2_sel), .inp1(val2), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val2_alu));
   Mux_3to1 mux3(.sel(ST_val_sel), .inp1(val_src2), .inp2(ALU_result_in_Mem), .inp3(Write_Value), .out(val_src2_out));

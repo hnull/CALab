@@ -87,7 +87,7 @@ IF_Stage_reg u2(
 								.PC_in(PC),
 								.Instruction_in(Instruction),
                 .flush(Br_taken),
-                
+
 								.PC(PC1),
 								.Instruction(Instruction1)
 								);
@@ -254,19 +254,28 @@ WB_Stage u9
 		   .PC(PC8)
 		  );
 
-Hazard_Unit hazard_unit
-      (
-        .Src1(Instruction1[25:21]),
-        .Src2(Instruction1[20:16]),
-        .Exe_wb_en(write_back_enable_id_reg_out),
-        .Exe_dst(dst_id_reg_out),
-        .Mem_dst(Destination2),
-        .Mem_wb_en(WB_EN_out2),
-        .is_two_source(is_two_source),
-        .Mem_R_EN(MEM_Read_out3),
+// Hazard_Unit hazard_unit
+//       (
+//         .Src1(Instruction1[25:21]),
+//         .Src2(Instruction1[20:16]),
+//         .Exe_wb_en(write_back_enable_id_reg_out),
+//         .Exe_dst(dst_id_reg_out),
+//         .Mem_dst(Destination),
+//         .Mem_wb_en(WB_EN_out2),
+//         .is_two_source(is_two_source),
+//         .Mem_R_EN(Mem_read),
+//
+//         .Hazard_detected_signal(Hazard_detected_signal)
+//       );
+HazardUnit_with_ForwardUnit hazard_with_forward(
+                    .Src1(Instruction1[25:21]),
+                    .Src2(Instruction1[20:16]),
+                    .Exe_dst(dst_id_reg_out),
+                    .is_two_source(is_two_source),
+                    .Mem_R_EN(mem_Read_id_reg_out),
 
-        .Hazard_detected_signal(Hazard_detected_signal)
-      );
+                    .Hazard_detected_signal(Hazard_detected_signal)
+                   );
 
 Forwarding_Unit forwarding_unit
       (
