@@ -8,7 +8,6 @@ module IF_Stage_reg
     input flush,
     output reg[31:0] PC,
     output reg[31:0] Instruction
-
   );
 
   always @(posedge clk, posedge rst)

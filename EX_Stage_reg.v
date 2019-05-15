@@ -6,7 +6,6 @@ module EX_Stage_reg
     input WB_en_in,
     input MEM_R_EN_in,
     input MEM_W_EN_in,
-
     input [31:0] PC_in,
     input [31:0] ALU_result_in,
     input [31:0] ST_val_in,
@@ -35,7 +34,6 @@ module EX_Stage_reg
       end
       else if(Freeze == 1'b0)
         begin
-
           WB_en <= WB_en_in;
           MEM_R_EN <= MEM_R_EN_in;
           MEM_W_EN <= MEM_W_EN_in;
@@ -43,7 +41,6 @@ module EX_Stage_reg
           ALU_result <= ALU_result_in;
           ST_val <= ST_val_in;
           Dest <= Dest_in;
-
         end
     end
 

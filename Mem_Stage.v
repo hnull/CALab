@@ -26,10 +26,13 @@ module Mem_Stage
     assign ALU_result = ALU_result_in;
     assign MEM_R_EN = MEM_R_EN_in;
     assign Dest = Dest_in;
-    // Data_Memory data_mem (.address(adr), .write_data(ST_val_in),
-    //                       .mem_read(MEM_R_EN_in), .mem_write(MEM_W_EN_in), .clk(clk),
-    //                       .rst(rst), .read_data(MEM_read_value));
-   SRAM sram(.clk(clk),
+    /*
+    Data_Memory data_mem (.address(adr), .write_data(ST_val_in),
+                           .mem_read(MEM_R_EN_in), .mem_write(MEM_W_EN_in), .clk(clk),
+                           .rst(rst), .read_data(MEM_read_value));
+    */
+   SRAM sram(
+				  .clk(clk),
               .rst(rst),
               .mem_wr_en(MEM_W_EN_in),
               .mem_rd_en(MEM_R_EN_in),
@@ -37,11 +40,10 @@ module Mem_Stage
               .write_data(ST_val_in),
               .read_data(MEM_read_value),
               .ready(sram_ready),
-
               .SRAM_DQ(SRAM_DQ),
               .SRAM_ADDR(SRAM_ADDR),
               .SRAM_WE_N(SRAM_WE_N)
-              );
+             );
 	 Address_Mapping address_mapping (.in(ALU_result_in), .out(adr));
   always @(posedge clk, posedge rst)
     begin

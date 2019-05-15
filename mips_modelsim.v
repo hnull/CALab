@@ -20,7 +20,6 @@ wire [31:0] Reg2;
 wire Mem_read;
 wire Mem_write;
 wire [31:0] PC2;
-// wire flush;
 wire [31:0] PC3;
 wire write_back_enable_id_reg_out;
 wire [3:0] ex_cmd_id_reg_out;
@@ -220,14 +219,14 @@ Mem_Stage u7
 	    .MEM_W_EN_in(MEM_Write_out2),
 	    .ALU_result_in(ALU_result2),
 	    .ST_val_in(ST_val),
-			.Dest_in(Destination2),
+		  .Dest_in(Destination2),
 
 	    .WB_en(WB_EN_out3),
 	    .PC(PC6),
 	    .MEM_R_EN(MEM_Read_out3),
 	    .ALU_result(ALU_result3),
 	    .MEM_read_value(MEM_read_value),
-			.Dest(Destination3),
+		  .Dest(Destination3),
       .sram_ready(sram_ready),
       .SRAM_DQ(SRAM_DQ),
       .SRAM_ADDR(SRAM_ADDR),
@@ -238,7 +237,7 @@ Mem_Stage_reg u8
 		(
 		  .clk(clk),
 		  .rst(rst),
-      .Freeze(Hazard_detected_signal || sram_ready),
+		  .Freeze(Hazard_detected_signal || sram_ready),
 		  .PC_in(PC6),
 		  .WB_en_in(WB_EN_out3),
 		  .MEM_R_EN_in(MEM_Read_out3),
@@ -271,20 +270,24 @@ WB_Stage u9
 		   .PC(PC8)
 		  );
 
-// Hazard_Unit hazard_unit
-//       (
-//         .Src1(Instruction1[25:21]),
-//         .Src2(Instruction1[20:16]),
-//         .Exe_wb_en(write_back_enable_id_reg_out),
-//         .Exe_dst(dst_id_reg_out),
-//         .Mem_dst(Destination),
-//         .Mem_wb_en(WB_EN_out2),
-//         .is_two_source(is_two_source),
-//         .Mem_R_EN(Mem_read),
-//
-//         .Hazard_detected_signal(Hazard_detected_signal)
-//       );
-HazardUnit_with_ForwardUnit hazard_with_forward(
+/*
+Hazard_Unit hazard_unit
+      (
+        .Src1(Instruction1[25:21]),
+        .Src2(Instruction1[20:16]),
+        .Exe_wb_en(write_back_enable_id_reg_out),
+        .Exe_dst(dst_id_reg_out),
+        .Mem_dst(Destination),
+        .Mem_wb_en(WB_EN_out2),
+        .is_two_source(is_two_source),
+        .Mem_R_EN(Mem_read),
+
+        .Hazard_detected_signal(Hazard_detected_signal)
+      );
+*/
+
+HazardUnit_with_ForwardUnit hazard_with_forward
+                   (
                     .Src1(Instruction1[25:21]),
                     .Src2(Instruction1[20:16]),
                     .Exe_dst(dst_id_reg_out),
