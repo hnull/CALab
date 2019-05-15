@@ -16,15 +16,37 @@ module Mem_Stage
     output [31:0] ALU_result,
     output [31:0] MEM_read_value,
     output [4:0] Dest
+    output sram_ready,
+    inout [15:0] SRAM_DQ,
+    output [17:0] SRAM_ADDR,
+    output SRAM_WE_N
   );
     wire [31:0] adr;
     assign WB_en = WB_en_in;
     assign ALU_result = ALU_result_in;
     assign MEM_R_EN = MEM_R_EN_in;
     assign Dest = Dest_in;
-    Data_Memory data_mem (.address(adr), .write_data(ST_val_in),
-                          .mem_read(MEM_R_EN_in), .mem_write(MEM_W_EN_in), .clk(clk),
-                          .rst(rst), .read_data(MEM_read_value));
+    wire SRAM_UB_N,SRAM_LB_N,SRAM_CE_N,SRAM_OE_N;
+    // Data_Memory data_mem (.address(adr), .write_data(ST_val_in),
+    //                       .mem_read(MEM_R_EN_in), .mem_write(MEM_W_EN_in), .clk(clk),
+    //                       .rst(rst), .read_data(MEM_read_value));
+    SRAM sram(.clk(clk),
+              .rst(rst),
+              .mem_wr_en(MEM_W_EN_in),
+              .mem_rd_en(MEM_R_EN_in),
+              .address(adr),
+              .write_data(ST_val_in),
+              .read_data(MEM_read_value),
+              .ready(sram_ready),
+
+              .SRAM_DQ(SRAM_DQ),
+              .SRAM_ADDR(SRAM_ADDR),
+              .SRAM_UB_N(SRAM_UB_N),
+              .SRAM_LB_N(SRAM_LB_N),
+              .SRAM_WE_N(SRAM_WE_N),
+              .SRAM_CE_N(SRAM_CE_N),
+              .SRAM_OE_N(SRAM_OE_N),
+              );
     Address_Mapping address_mapping (.in(ALU_result_in), .out(adr));
   always @(posedge clk, posedge rst)
     begin

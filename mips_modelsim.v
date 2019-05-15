@@ -234,7 +234,12 @@ Mem_Stage_reg u8
 		  .MEM_R_EN(MEM_Read_out4),
 		  .ALU_result(ALU_result4),
 		  .Mem_read_value(MEM_read_value2),
-		  .Dest(Destination4)
+		  .Dest(Destination4),
+      output sram_ready,
+      inout [15:0] SRAM_DQ,
+      output [17:0] SRAM_ADDR,
+      output SRAM_WE_N
+
 		);
 
 WB_Stage u9
