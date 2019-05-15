@@ -13,7 +13,8 @@ module SRAM (input clk,
              output reg  [17:0] SRAM_ADDR,
              output reg SRAM_WE_N
               );
-  reg[2:0] cnt = 3'b001;
+  reg[2:0] cnt;
+  //reg[2:0] cnt = 3'b001;
   // integer cnt_read;
   reg [15:0] data_write_temp;
   reg [31:0] data_read_temp;
