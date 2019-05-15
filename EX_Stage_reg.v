@@ -2,6 +2,7 @@ module EX_Stage_reg
   (
     input clk,
     input rst,
+    input Freeze,
     input WB_en_in,
     input MEM_R_EN_in,
     input MEM_W_EN_in,
@@ -32,7 +33,7 @@ module EX_Stage_reg
         ST_val <= 1'b0;
         Dest <= 5'b0;
       end
-      else
+      else if(Freeze == 1'b0)
         begin
 
           WB_en <= WB_en_in;

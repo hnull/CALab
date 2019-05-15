@@ -2,6 +2,7 @@ module Mem_Stage_reg
   (
     input clk,
     input rst,
+    input Freeze,
     input[31:0] PC_in,
     input WB_en_in,
     input MEM_R_EN_in,
@@ -27,7 +28,7 @@ module Mem_Stage_reg
           Mem_read_value <= 32'b0;
           Dest <= 5'b0;
       end
-      else
+      else if(Freeze == 1'b0)
         begin
           PC <= PC_in;
           WB_en <= WB_en_in;

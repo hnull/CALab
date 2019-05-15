@@ -227,7 +227,7 @@ Mem_Stage u7
 	    .MEM_R_EN(MEM_Read_out3),
 	    .ALU_result(ALU_result3),
 	    .MEM_read_value(MEM_read_value),
-			.Dest(Destination3),
+			.Dest(Destination3)
       .sram_ready(sram_ready),
       .SRAM_DQ(SRAM_DQ),
       .SRAM_ADDR(SRAM_ADDR),
