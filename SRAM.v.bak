@@ -54,8 +54,8 @@ module SRAM
 	      endcase
 	    end
 	   else if (mem_rd_en)
+		  SRAM_WE_N <= 1'b1;
 			begin
-			SRAM_WE_N <= 1'b1;
 	      case (cnt)
 	        3'b001:
 					 begin

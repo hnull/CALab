@@ -101,7 +101,7 @@ IF_Stage_reg u2(
 ID_Stage u3(
 						.clk(clk),
 						.rst(rst),
-            .Freeze(Hazard_detected_signal || sram_ready),
+            .Freeze(Hazard_detected_signal),
 						.PC_in(PC1),
 						.Instruction(Instruction1),
 						.write_val(write_val2),
@@ -125,7 +125,7 @@ ID_Stage u3(
 ID_Stage_reg u4(
                 .clk(clk),
                 .rst(rst),
-                .Freeze(Hazard_detected_signal || sram_ready),
+                .Freeze(sram_ready),
                 .PC_in(PC2),
                 .WB_enable(WB_enable),
                 .Ex_cmd(Ex_cmd),
@@ -191,7 +191,7 @@ EX_Stage u5
 EX_Stage_reg u6(
     .clk(clk),
     .rst(rst),
-    .Freeze(Hazard_detected_signal || sram_ready),
+    .Freeze(sram_ready),
     .WB_en_in(WB_EN_out),
     .MEM_R_EN_in(MEM_Read_out),
     .MEM_W_EN_in(MEM_Write_out),
@@ -237,7 +237,7 @@ Mem_Stage_reg u8
 		(
 		  .clk(clk),
 		  .rst(rst),
-		  .Freeze(Hazard_detected_signal || sram_ready),
+		  .Freeze(sram_ready),
 		  .PC_in(PC6),
 		  .WB_en_in(WB_EN_out3),
 		  .MEM_R_EN_in(MEM_Read_out3),
