@@ -6,11 +6,12 @@ module SRAM
        input mem_rd_en,
        input [31:0] address,
        input [31:0] write_data,
-       output [31:0] read_data,
+       // output [31:0] read_data,
        output ready,
        inout [15:0] SRAM_DQ,
        output reg  [17:0] SRAM_ADDR,
-       output reg SRAM_WE_N
+       output reg SRAM_WE_N,
+			 output reg [63:0] output_for_cache
    );
 
   reg[2:0] cnt;
@@ -65,15 +66,29 @@ module SRAM
 	        3'b010:
 					 begin
 	          SRAM_ADDR <= address + 1;
+						output_for_cache[15:0] <= SRAM_DQ;
 	          data_read_temp[15:0]  <= SRAM_DQ;
 	          cnt <= cnt + 3'b001;
 	         end
 	        3'b011:
 					 begin
+					 	output_for_cache[31:16] <= SRAM_DQ;
 	          SRAM_ADDR <= address + 2;
 	          data_read_temp[31:16]  <= SRAM_DQ;
 	          cnt <= cnt + 3'b001;
 	         end
+					 3'b011:
+	 					 begin
+						 output_for_cache[47:32] <= SRAM_DQ;
+						 SRAM_ADDR <= address + 3;
+						 cnt <= cnt + 3'b001;
+						 end
+					3'b011:
+						begin
+							 output_for_cache[63:48] <= SRAM_DQ;
+							 //SRAM_ADDR <= address + 4;
+							 cnt <= cnt + 3'b001;
+					 end
 	        3'b110:
 					 begin
 	          cnt <= 3'b001;
@@ -87,5 +102,5 @@ module SRAM
   	end
   assign SRAM_DQ = (mem_wr_en) ? (data_write_temp) : (16'bzzzzzzzzzzzzzzzz);
   assign ready = (cnt != 3'b110 && sram_work ) ? 1'b1 : 1'b0;
-  assign read_data = (mem_rd_en) ? (data_read_temp) : (32'bzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);
+  // assign output_for_cache = (mem_rd_en) ? (data_read_temp) : (32'bzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);
 endmodule // SRAM
