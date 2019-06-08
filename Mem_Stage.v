@@ -39,24 +39,24 @@ module Mem_Stage
     wire sram_ready_for_cache;
     // assign MEM_read_value = mem_val_between;
    cache_controller Cache (
-     .clk(clk),
-     .rst(rst),
-     //memory stage unit
-     .address(adr),
-     .wdata(ST_val_in),
-     .MEM_R_EN(MEM_R_EN_in),
-     .MEM_W_EN(MEM_W_EN_in),
-     .rdata(MEM_read_value),
-     // .ready(1'b0),
+             .clk(clk),
+             .rst(rst),
+             //memory stage unit
+             .address(adr),
+             .wdata(ST_val_in),
+             .MEM_R_EN(MEM_R_EN_in),
+             .MEM_W_EN(MEM_W_EN_in),
+             .rdata(MEM_read_value),
+             // .ready(1'b0),
 
-     //SRAM cache_controller
-     // .sram_address(SRAM_ADDR),
-     //.sram_wdata(MEM_read_value),
-     .SRAM_mem_read(sram_read_command),
-     .SRAM_mem_write(sram_write_command),
-     .sram_rdata(output_for_cache),
-     .sram_ready(sram_ready_for_cache),
-     .freeze(freeze)
+             //SRAM cache_controller
+             // .sram_address(SRAM_ADDR),
+             //.sram_wdata(MEM_read_value),
+             .SRAM_mem_read(sram_read_command),
+             .SRAM_mem_write(sram_write_command),
+             .sram_rdata(output_for_cache),
+             .sram_ready(sram_ready_for_cache),
+             .freeze(freeze)
      );
    SRAM sram(
 				      .clk(clk),

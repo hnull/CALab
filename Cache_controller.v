@@ -84,19 +84,21 @@ module cache_controller
             SRAM_mem_write <= 1'b1;
               if (valid1 == 1'b1)
                 begin
-                  way_1[index][73] = 1'b0;
-                  least_recent_used[index] = 1'b0;
+                  {way_1[index][73], least_recent_used[index]} = {1'b0,1'b0};
+                  // way_1[index][73] = 1'b0;
+                  // least_recent_used[index] = 1'b0;
                 end
               else if (valid2 == 1'b1)
                 begin
-                  way_2[index][73] = 1'b0;
-                  least_recent_used[index] = 1'b1;
+                {way_2[index][73] ,least_recent_used[index]} = {1'b0,1'b1};
+                  // way_2[index][73] = 1'b0;
+                  // least_recent_used[index] = 1'b1;
                 end
           end //mem write en
         else if (sram_ready)
           begin
-            SRAM_mem_write <= 1'b0;
-            SRAM_mem_read <= 1'b0;
+            {SRAM_mem_write, SRAM_mem_read} <= {1'b0,1'b0};
+            // SRAM_mem_read <= 1'b0;
           end
       end
    end
