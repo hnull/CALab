@@ -2,20 +2,15 @@ module cache_controller
   (
     input clk,
     input rst,
-
-    //memory stage unit
     input [31:0] address,
     input [31:0] wdata,
     input   MEM_R_EN,
     input   MEM_W_EN,
     input   sram_ready,
     input [63:0] sram_rdata,
+
     output [31:0] rdata,
     output ready,
-
-    //SRAM cache_controller
-    // output [31:0] sram_address,
-    // output [31:0] sram_wdata,
     output reg SRAM_mem_read,
     output reg SRAM_mem_write,
     output freeze
@@ -63,18 +58,10 @@ module cache_controller
               if(least_recent_used[index] == 1'b0 && sram_ready)
                 begin
                   {way_2[index][63:0], way_2[index][72:64], way_2[index][73], least_recent_used[index]} = {sram_rdata, tag, 1'b1,1'b1};
-                  // way_2[index][63:0] = sram_rdata;
-                  // way_2[index][72:64] = tag;
-                  // way_2[index][73] = 1'b1;
-                  // least_recent_used[index] == 1'b1;
                 end
               else if(least_recent_used[index] == 1'b0 && sram_ready)
                 begin
                   {way_1[index][63:0], way_1[index][72:64], way_1[index][73], least_recent_used[index]} = {sram_rdata, tag, 1'b1,1'b0};
-                  // way_1[index][63:0] = sram_rdata;
-                  // way_1[index][72:64] = tag;
-                  // way_1[index][73] = 1'b1;
-                  // least_recent_used[index] == 1'b0;
                 end
             end //hit 0
           end //mem read en
@@ -85,20 +72,15 @@ module cache_controller
               if (valid1 == 1'b1)
                 begin
                   {way_1[index][73], least_recent_used[index]} = {1'b0,1'b0};
-                  // way_1[index][73] = 1'b0;
-                  // least_recent_used[index] = 1'b0;
                 end
               else if (valid2 == 1'b1)
                 begin
                 {way_2[index][73] ,least_recent_used[index]} = {1'b0,1'b1};
-                  // way_2[index][73] = 1'b0;
-                  // least_recent_used[index] = 1'b1;
                 end
           end //mem write en
         else if (sram_ready)
           begin
             {SRAM_mem_write, SRAM_mem_read} <= {1'b0,1'b0};
-            // SRAM_mem_read <= 1'b0;
           end
       end
    end
