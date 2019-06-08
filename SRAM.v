@@ -86,7 +86,6 @@ module SRAM
 					3'b011:
 						begin
 							 output_for_cache[63:48] <= SRAM_DQ;
-							 //SRAM_ADDR <= address + 4;
 							 cnt <= cnt + 3'b001;
 					 end
 	        3'b110:

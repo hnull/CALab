@@ -33,9 +33,10 @@ module Mem_Stage
     */
     wire sram_write_command,sram_read_command;
     wire [63:0] output_for_cache;
-    wire srram_reeeady;
-    assign sram_ready = srram_reeeady;
+    wire freeze;
+    assign sram_ready = freeze;
     wire [31:0] mem_val_between;
+    wire sram_ready_for_cache;
     // assign MEM_read_value = mem_val_between;
    cache_controller Cache (
      .clk(clk),
@@ -54,18 +55,18 @@ module Mem_Stage
      .SRAM_mem_read(sram_read_command),
      .SRAM_mem_write(sram_write_command),
      .sram_rdata(output_for_cache),
-     .sram_ready(srram_reeeady)
-     // output freeze
+     .sram_ready(sram_ready_for_cache),
+     .freeze(freeze)
      );
    SRAM sram(
-				  .clk(clk),
+				      .clk(clk),
               .rst(rst),
               .mem_wr_en(sram_write_command),
               .mem_rd_en(sram_read_command),
               .address(adr),
               .write_data(ST_val_in),
               // .read_data(mem_val_between),
-              .ready(srram_reeeady),
+              .ready(sram_ready_for_cache),
               .SRAM_DQ(SRAM_DQ),
               .SRAM_ADDR(SRAM_ADDR),
               .SRAM_WE_N(SRAM_WE_N),
